@@ -1,6 +1,6 @@
 use std::io::stdin;
 
-fn main() {
+pub fn fn01_01() {
     let mut left: Vec<i32> = Vec::new();
     let mut right: Vec<i32> = Vec::new();
     stdin().lines().for_each(|line| {

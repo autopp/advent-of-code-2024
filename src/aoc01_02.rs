@@ -1,6 +1,6 @@
 use std::{collections::HashMap, io::stdin};
 
-fn main() {
+pub fn fn01_02() {
     let mut left: Vec<i32> = Vec::new();
     let mut right: HashMap<i32, i32> = HashMap::new();
     stdin().lines().for_each(|line| {

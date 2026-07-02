@@ -4,25 +4,19 @@ pub fn fn02_01() {
     let safe_count = stdin()
         .lines()
         .filter(|line| {
-            let mut numbers = line
-                .as_ref()
+            line.as_ref()
                 .unwrap()
                 .split_whitespace()
-                .map(|s| s.parse::<i32>().unwrap());
+                .map(|s| s.parse::<i32>().unwrap())
+                .collect::<Vec<i32>>()
+                .windows(2)
+                .try_fold(0, |prev_diff, pair| {
+                    let curr = pair[0];
+                    let next = pair[1];
+                    let diff = next - curr;
 
-            let first = numbers.next().unwrap();
-            let second = numbers.next().unwrap();
-            let first_diff = second - first;
-            if first_diff.abs() < 1 || first_diff.abs() > 3 {
-                return false;
-            }
-
-            let should_be_asc = first_diff > 0;
-
-            numbers
-                .try_fold(second, |prev, curr| {
-                    if is_valid_sequence(prev, curr, should_be_asc) {
-                        Ok::<_, ()>(curr)
+                    if is_valid_diff(diff, prev_diff) {
+                        Ok(diff)
                     } else {
                         Err(())
                     }
@@ -34,11 +28,10 @@ pub fn fn02_01() {
     println!("{}", safe_count);
 }
 
-fn is_valid_sequence(prev: i32, curr: i32, should_be_asc: bool) -> bool {
-    let diff = curr - prev;
+fn is_valid_diff(diff: i32, prev_diff: i32) -> bool {
     if diff.abs() < 1 || diff.abs() > 3 {
         return false;
     }
 
-    (diff > 0) == should_be_asc
+    diff * prev_diff >= 0
 }

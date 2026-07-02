@@ -1,5 +1,6 @@
 mod aoc01_01;
 mod aoc01_02;
+mod aoc02_01;
 
 use std::env;
 
@@ -17,6 +18,9 @@ fn main() {
         }
         "01_02" => {
             aoc01_02::fn01_02();
+        }
+        "02_01" => {
+            aoc02_01::fn02_01();
         }
         _ => {
             eprintln!("Unknown target: {}", target);

@@ -17,11 +17,11 @@ pub fn fn02_01() {
                 return false;
             }
 
-            let should_be_acc = first_diff > 0;
+            let should_be_asc = first_diff > 0;
 
             numbers
                 .try_fold(second, |prev, curr| {
-                    if is_valid_sequence(prev, curr, should_be_acc) {
+                    if is_valid_sequence(prev, curr, should_be_asc) {
                         Ok::<_, ()>(curr)
                     } else {
                         Err(())
@@ -34,11 +34,11 @@ pub fn fn02_01() {
     println!("{}", safe_count);
 }
 
-fn is_valid_sequence(prev: i32, curr: i32, should_be_acc: bool) -> bool {
+fn is_valid_sequence(prev: i32, curr: i32, should_be_asc: bool) -> bool {
     let diff = curr - prev;
     if diff.abs() < 1 || diff.abs() > 3 {
         return false;
     }
 
-    (diff > 0) == should_be_acc
+    (diff > 0) == should_be_asc
 }

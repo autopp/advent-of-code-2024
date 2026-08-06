@@ -11,20 +11,22 @@ pub fn fn02_02() {
                 .map(|s| s.parse::<i32>().unwrap())
                 .collect::<Vec<i32>>();
 
-            if is_valid_sequence(seq.clone()) {
-                return true;
+            match find_invalid_index(seq.clone()) {
+                Some(index) => [0, index, index + 1]
+                    .into_iter()
+                    .any(|i| find_invalid_index([&seq[..i], &seq[i + 1..]].concat()).is_none()),
+                None => true,
             }
-
-            (0..(seq.len())).any(|i| is_valid_sequence([&seq[..i], &seq[i + 1..]].concat()))
         })
         .count();
 
     println!("{}", safe_count);
 }
 
-fn is_valid_sequence(seq: Vec<i32>) -> bool {
+fn find_invalid_index(seq: Vec<i32>) -> Option<usize> {
     seq.windows(2)
-        .try_fold(0, |prev_diff, pair| {
+        .enumerate()
+        .try_fold(0, |prev_diff, (index, pair)| {
             let curr = pair[0];
             let next = pair[1];
             let diff = next - curr;
@@ -32,10 +34,10 @@ fn is_valid_sequence(seq: Vec<i32>) -> bool {
             if is_valid_diff(diff, prev_diff) {
                 Ok(diff)
             } else {
-                Err(())
+                Err(index)
             }
         })
-        .is_ok()
+        .err()
 }
 
 fn is_valid_diff(diff: i32, prev_diff: i32) -> bool {

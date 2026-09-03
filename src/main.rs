@@ -4,6 +4,7 @@ mod aoc02_01;
 mod aoc02_02;
 mod aoc03_01;
 mod aoc03_02;
+mod aoc04_01;
 
 use std::env;
 
@@ -33,6 +34,9 @@ fn main() {
         }
         "03_02" => {
             aoc03_02::fn03_02();
+        }
+        "04_01" => {
+            aoc04_01::fn04_01();
         }
         _ => {
             eprintln!("Unknown target: {}", target);

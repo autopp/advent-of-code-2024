@@ -6,7 +6,6 @@ pub fn fn04_01() {
         let line = line.unwrap();
         board.push(line.as_bytes().to_vec());
     });
-    println!("board: {:?}", board[0]);
 
     let directions = [
         (1, 0),
@@ -46,12 +45,13 @@ fn search(
     target: &[u8],
     direction: (i32, i32),
 ) -> bool {
-    if target.is_empty() {
-        return true;
-    }
-
     if board[cursor.0][cursor.1] != target[0] {
         return false;
+    }
+
+    let next_target = &target[1..];
+    if next_target.is_empty() {
+        return true;
     }
 
     let may_be_next_y = cursor.0 as i32 + direction.0;
@@ -69,5 +69,5 @@ fn search(
 
     let next_cursor = (next_y, next_x);
 
-    search(board, next_cursor, &target[1..], direction)
+    search(board, next_cursor, next_target, direction)
 }
